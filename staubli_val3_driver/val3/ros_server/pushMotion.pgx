@@ -41,6 +41,16 @@
       // such that 0.2 = 20% of maximum joint speed
       l_mTrajPt.mDesc.vel= limit((rosTrajPtMsg.jointTrajPt.nVelocity * 100), 0, 100)
       l_mTrajPt.nDuration=rosTrajPtMsg.jointTrajPt.nDuration
+      // Blend on joint positions if not end of trajectory
+      if (l_mTrajPt.nSequence==-3)
+        l_mTrajPt.mDesc.blend=off
+        l_mTrajPt.mDesc.reach=0
+        l_mTrajPt.mDesc.leave=0
+      else
+        l_mTrajPt.mDesc.blend=joint
+        l_mTrajPt.mDesc.reach=50 //mm
+        l_mTrajPt.mDesc.leave=50 //mm
+      endIf
 
     break
     case 14
@@ -59,6 +69,16 @@
       // not sure about accelerations as yet
       l_mTrajPt.mDesc.accel=rosTrajPtFMsg.jointTrajPtFull.nAccelerations[0]
       l_mTrajPt.mDesc.decel=l_mTrajPt.mDesc.accel
+      // Blend on joint positions if not end of trajectory
+      if (l_mTrajPt.nSequence==-3)
+        l_mTrajPt.mDesc.blend=off
+        l_mTrajPt.mDesc.reach=0
+        l_mTrajPt.mDesc.leave=0
+      else
+        l_mTrajPt.mDesc.blend=joint
+        l_mTrajPt.mDesc.reach=50 //mm
+        l_mTrajPt.mDesc.leave=50 //mm
+      endIf
     break
     default
     break
