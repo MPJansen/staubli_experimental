@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+  Manipulator specific version of the state visualizer.
+
+  Defaults provided for tx90l:
+   - 6 joints
+
+  Usage:
+    robot_state_visualize_tx90l.launch robot_ip:=<value>
+-->
+<launch>
+  <arg name="robot_ip" doc="IP of controller" />
+
+  <rosparam command="load" file="$(find staubli_tx90_support)/config/joint_names_tx90l.yaml" />
+
+  <include file="$(find staubli_val3_driver)/launch/robot_state.launch">
+    <arg name="robot_ip"   value="$(arg robot_ip)" />
+  </include>
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" 
+    type="robot_state_publisher" />
+
+  <include file="$(find staubli_tx90_support)/launch/load_tx90l.launch" />
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find industrial_robot_client)/config/robot_state_visualize.rviz" required="true" />
+</launch>
